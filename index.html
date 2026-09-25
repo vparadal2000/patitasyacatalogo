@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Patitas Ya: catálogo de alimentos y productos para mascotas con delivery coordinado.">
+  <meta name="theme-color" content="#2f6b43">
+  <title>Patitas Ya | Catálogo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="announcement" id="announcementText">🚚 Delivery coordinado</div>
+
+  <header class="header">
+    <a class="brand" href="#catalogo" aria-label="Ir al catálogo">
+      <div class="brand__logo">
+        <img id="siteLogo" src="assets/images/logo-patitas.png" alt="Patitas Ya">
+        <span>🐾</span>
+      </div>
+      <div>
+        <strong id="storeName">Patitas Ya</strong>
+        <small id="storeTagline">Todo para tus mascotas</small>
+      </div>
+    </a>
+
+    <button class="cart-trigger" id="openCart" type="button" aria-label="Abrir mi pedido">
+      <span>🛒</span>
+      <span class="cart-trigger__label">Mi pedido</span>
+      <strong id="cartCount">0</strong>
+    </button>
+  </header>
+
+  <main id="catalogo">
+    <section class="catalog-intro">
+      <span class="eyebrow">CATÁLOGO PATITAS YA</span>
+      <h1>¿Qué necesita tu mascota?</h1>
+      <p>Busca por el nombre del producto o elige una categoría.</p>
+
+      <label class="main-search" for="searchInput">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="Ej: Nomade adulto, arena, snack..." autocomplete="off">
+        <button id="clearSearch" type="button" aria-label="Limpiar búsqueda">×</button>
+      </label>
+
+      <div class="category-strip" id="categoryGrid" aria-label="Categorías"></div>
+    </section>
+
+    <section class="products-section">
+      <div class="products-heading">
+        <div>
+          <h2 id="catalogTitle">Todos los productos</h2>
+          <p id="resultsCount">Cargando productos...</p>
+        </div>
+        <button class="text-button hidden" id="clearFilters" type="button">Ver todos</button>
+      </div>
+
+      <div class="active-search hidden" id="activeSearch"></div>
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="empty hidden" id="emptyState">
+        <span>🐾</span>
+        <h3>No encontramos ese producto</h3>
+        <p>Prueba escribiendo otra palabra del nombre o cambia de categoría.</p>
+      </div>
+
+      <button class="load-more hidden" id="loadMore" type="button">Mostrar más productos</button>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Patitas Ya</strong>
+    <span id="deliveryText">Delivery coordinado. Stock y despacho sujetos a confirmación.</span>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="cart" id="cartDrawer" aria-label="Mi pedido">
+    <div class="cart__header">
+      <div>
+        <span class="eyebrow">TU LISTA</span>
+        <h2>Mi pedido</h2>
+      </div>
+      <button id="closeCart" type="button" aria-label="Cerrar">×</button>
+    </div>
+
+    <div class="cart__items" id="cartItems"></div>
+    <div class="cart__empty" id="cartEmpty">
+      <span>🛒</span>
+      <p>Aún no agregas productos.</p>
+    </div>
+
+    <div class="cart__footer">
+      <div class="cart__total">
+        <span>Total productos</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="checkout-button" id="checkoutButton" type="button">Continuar con mis datos</button>
+      <small>El despacho y stock se confirman después de recibir tu solicitud.</small>
+    </div>
+  </aside>
+
+  <section class="modal product-modal" id="productModal" aria-label="Detalle del producto">
+    <button class="modal__close" id="closeProductModal" type="button" aria-label="Cerrar">×</button>
+    <div id="productDetail"></div>
+  </section>
+
+  <section class="modal checkout-modal" id="checkoutModal" aria-label="Finalizar pedido">
+    <button class="modal__close" id="closeCheckout" type="button" aria-label="Cerrar">×</button>
+    <div class="checkout-heading">
+      <span class="eyebrow">FINALIZAR PEDIDO</span>
+      <h2>Datos para coordinar tu compra</h2>
+      <p>No pagarás en esta página. Recibiremos tu solicitud y te contactaremos para confirmar stock, despacho y pago.</p>
+    </div>
+
+    <div class="checkout-summary" id="checkoutSummary"></div>
+
+    <form id="orderForm" class="order-form">
+      <div class="form-grid">
+        <label>Nombre y apellido
+          <input id="customerName" name="name" type="text" autocomplete="name" required maxlength="100">
+        </label>
+        <label>Teléfono de contacto
+          <input id="customerPhone" name="phone" type="tel" autocomplete="tel" placeholder="Ej: +56 9 1234 5678" required maxlength="30">
+        </label>
+      </div>
+
+      <label>Dirección de entrega
+        <input id="customerAddress" name="address" type="text" autocomplete="street-address" placeholder="Calle, número, sector/comuna" required maxlength="180">
+      </label>
+
+      <label>Medio de pago
+        <select id="paymentMethod" name="paymentMethod" required></select>
+      </label>
+
+      <label>Comentario adicional <span>(opcional)</span>
+        <textarea id="customerNotes" name="notes" rows="3" maxlength="500" placeholder="Referencia de dirección, horario, observaciones..."></textarea>
+      </label>
+
+      <label class="privacy-check">
+        <input id="privacyConsent" type="checkbox" required>
+        <span>Acepto que Patitas Ya use estos datos solamente para gestionar y coordinar este pedido.</span>
+      </label>
+
+      <button class="submit-order" id="submitOrder" type="submit">Enviar pedido</button>
+      <p class="form-message" id="formMessage" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section class="modal success-modal" id="successModal" aria-label="Pedido recibido">
+    <div class="success-icon">✓</div>
+    <span class="eyebrow">PEDIDO RECIBIDO</span>
+    <h2>¡Gracias!</h2>
+    <p id="successText"></p>
+    <button class="checkout-button" id="closeSuccess" type="button">Volver al catálogo</button>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
